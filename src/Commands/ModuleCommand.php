@@ -21,7 +21,6 @@ class ControllerMakeCommand extends GeneratorCommand
 
 namespace Luna\Commands;
 
-use Luna\Commands\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
 class ModuleCommand extends GeneratorCommand
@@ -63,11 +62,11 @@ class ModuleCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Luna\Modules';
+        return $rootNamespace.'\Luna\Modules';
     }
 
     /**
@@ -80,8 +79,8 @@ class ModuleCommand extends GeneratorCommand
      */
     protected function buildClass($name)
     {
-        $stub  = $this->files->get($this->getStub());
-        $model = $this->option('model') ?? str_replace($this->getNamespace($name) . '\\', '', $name);
+        $stub = $this->files->get($this->getStub());
+        $model = $this->option('model') ?? str_replace($this->getNamespace($name).'\\', '', $name);
 
         return $this
             ->replaceNamespace($stub, $name)

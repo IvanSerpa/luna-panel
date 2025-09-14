@@ -23,6 +23,6 @@ class Package
     {
         $current = InstalledVersions::getInstallPath(static::$composerPackage);
 
-        return realpath($current . ($path ? DIRECTORY_SEPARATOR . $path : $path));
+        return realpath($current.($path ? DIRECTORY_SEPARATOR.$path : $path));
     }
 }
