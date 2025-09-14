@@ -46,6 +46,7 @@ class ModuleCommand extends GeneratorCommand
         return [
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the module already exists'],
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'The model that the module applies to'],
+            ['description', 'd', InputOption::VALUE_OPTIONAL, 'The description of the module'],
         ];
     }
 
@@ -66,7 +67,7 @@ class ModuleCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\Luna\Modules';
+        return $rootNamespace . '\Luna\Modules';
     }
 
     /**
@@ -80,11 +81,13 @@ class ModuleCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = $this->files->get($this->getStub());
-        $model = $this->option('model') ?? str_replace($this->getNamespace($name).'\\', '', $name);
+        $model = $this->option('model') ?? str_replace($this->getNamespace($name) . '\\', '', $name);
+        $description = $this->option('description') ?? 'A description for the module';
 
         return $this
             ->replaceNamespace($stub, $name)
             ->replaceModel($stub, $model)
+            ->replaceDescription($stub, $description)
             ->replaceClass($stub, $name);
     }
 }

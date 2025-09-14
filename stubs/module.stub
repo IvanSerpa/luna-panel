@@ -14,6 +14,13 @@ class {{ class }} extends Module
     public static string $name = '{{ class }}';
 
     /**
+     * The description of the module.
+     *
+     * @var string
+     */
+    public static string $description = '{{ description }}';
+
+    /**
      * The model the resource corresponds to.
      *
      * @var class-string
