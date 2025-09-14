@@ -1,16 +1,16 @@
 <?php
 
-namespace LunaPanel\Facades;
+namespace Luna\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \LunaPanel\LunaPanel
+ * @see \Luna\Luna
  */
-class LunaPanel extends Facade
+class Luna extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \LunaPanel\LunaPanel::class;
+        return \Luna\Luna::class;
     }
 }

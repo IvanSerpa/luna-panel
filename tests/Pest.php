@@ -1,5 +1,5 @@
 <?php
 
-use Ivan Serpa\LunaPanel\Tests\TestCase;
+use Luna\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

@@ -1,5 +1,5 @@
 <?php
 
-namespace LunaPanel;
+namespace Luna;
 
-class LunaPanel {}
+class Luna {}

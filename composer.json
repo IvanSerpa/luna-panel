@@ -34,13 +34,13 @@
     },
     "autoload": {
         "psr-4": {
-            "LunaPanel\\": "src/",
-            "LunaPanel\\Database\\Factories\\": "database/factories/"
+            "Luna\\": "src/",
+            "Luna\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LunaPanel\\Tests\\": "tests/",
+            "Luna\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -62,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LunaPanel\\LunaPanelServiceProvider"
+                "Luna\\LunaServiceProvider"
             ],
             "aliases": {
-                "LunaPanel": "LunaPanel\\Facades\\LunaPanel"
+                "Luna": "Luna\\Facades\\Luna"
             }
         }
     },

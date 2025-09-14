@@ -1,6 +1,6 @@
 <?php
 
-namespace LunaPanel\Database\Factories;
+namespace Luna\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ivan Serpa\LunaPanel\Tests;
+namespace Luna\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Ivan Serpa\LunaPanel\LunaPanelServiceProvider;
+use Luna\LunaServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Ivan Serpa\\LunaPanel\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn(string $modelName) => 'Ivan Serpa\\Luna\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            LunaPanelServiceProvider::class,
+            LunaServiceProvider::class,
         ];
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace LunaPanel\Commands;
+namespace Luna\Commands;
 
 use Illuminate\Console\Command;
 
-class LunaPanelCommand extends Command
+class LunaCommand extends Command
 {
     public $signature = 'luna-panel';
 

@@ -52,7 +52,7 @@ php artisan vendor:publish --tag="luna-panel-views"
 ## Usage
 
 ```php
-$lunaPanel = new Ivan Serpa\LunaPanel();
+$lunaPanel = new Luna();
 echo $lunaPanel->echoPhrase('Hello, Ivan Serpa!');
 ```
 
@@ -76,8 +76,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Ivan Serpa](https://github.com/IvanSerpa)
-- [All Contributors](../../contributors)
+-   [Ivan Serpa](https://github.com/IvanSerpa)
+-   [All Contributors](../../contributors)
 
 ## License
 

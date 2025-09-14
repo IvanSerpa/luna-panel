@@ -1,6 +1,4 @@
 <?php
 
-// config for Ivan Serpa/LunaPanel
-return [
-
-];
+// config for Ivan Serpa/Luna
+return [];
