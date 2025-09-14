@@ -22,6 +22,7 @@ class ControllerMakeCommand extends GeneratorCommand
 namespace Luna\Commands;
 
 use Luna\Commands\GeneratorCommand;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModuleCommand extends GeneratorCommand
 {
@@ -30,19 +31,24 @@ class ModuleCommand extends GeneratorCommand
     protected $description = 'Create a new module';
 
     /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-
-    protected $signature = 'luna:module {name} {model?}';
-
-    /**
      * The type of class being generated.
      *
      * @var string
      */
     protected $type = 'Module';
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the module already exists'],
+            ['model', 'm', InputOption::VALUE_OPTIONAL, 'The model that the module applies to'],
+        ];
+    }
 
     /**
      * Get the stub file for the generator.
@@ -75,7 +81,7 @@ class ModuleCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub  = $this->files->get($this->getStub());
-        $model = $this->argument('model') ?? str_replace($this->getNamespace($name) . '\\', '', $name);;
+        $model = $this->option('model') ?? str_replace($this->getNamespace($name) . '\\', '', $name);
 
         return $this
             ->replaceNamespace($stub, $name)

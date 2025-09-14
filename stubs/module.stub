@@ -3,10 +3,8 @@
 namespace {{ namespace }};
 
 use Luna\Module\Module;
-use App\Models\{{ model }};
 
-
-class {{ class }}Module extends Module
+class {{ class }} extends Module
 {
     /**
      * The name of the module.
@@ -20,5 +18,5 @@ class {{ class }}Module extends Module
      *
      * @var class-string
      */
-    public static string $model = {{ model }}::class;
+    public static string $model = \App\Models\{{ model }}::class;
 }
