@@ -6,9 +6,9 @@ use Illuminate\Console\Command;
 
 class LunaCommand extends Command
 {
-    public $signature = 'luna-panel';
+    protected $name = 'luna:hello';
 
-    public $description = 'My command';
+    protected $description = 'My command';
 
     public function handle(): int
     {

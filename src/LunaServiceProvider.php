@@ -4,7 +4,7 @@ namespace Luna;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Luna\Commands\LunaCommand;
+use Luna\Commands\{LunaCommand, ModuleCommand};
 
 class LunaServiceProvider extends PackageServiceProvider
 {
@@ -16,10 +16,13 @@ class LunaServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('luna-panel')
+            ->name('luna')
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('create_luna_panel_table')
-            ->hasCommand(LunaCommand::class);
+            ->hasCommands([
+                LunaCommand::class,
+                ModuleCommand::class
+            ]);
     }
 }

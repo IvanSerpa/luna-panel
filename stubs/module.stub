@@ -1,0 +1,24 @@
+<?php
+
+namespace {{ namespace }};
+
+use Luna\Module\Module;
+use App\Models\{{ model }};
+
+
+class {{ class }}Module extends Module
+{
+    /**
+     * The name of the module.
+     *
+     * @var string
+     */
+    public static string $name = '{{ class }}';
+
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var class-string
+     */
+    public static string $model = {{ model }}::class;
+}
