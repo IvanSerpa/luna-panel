@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace LunaPanel\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LunaPanelCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'luna-panel';
 
     public $description = 'My command';
 

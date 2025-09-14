@@ -1,5 +1,5 @@
 <?php
 
-use VendorName\Skeleton\Tests\TestCase;
+use Ivan Serpa\LunaPanel\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
