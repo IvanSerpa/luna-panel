@@ -3,6 +3,7 @@
 namespace Luna\Commands;
 
 use Illuminate\Console\GeneratorCommand as BaseGeneratorCommand;
+use Illuminate\Support\Str;
 use Luna\Configuration\Package;
 
 abstract class GeneratorCommand extends BaseGeneratorCommand
@@ -17,6 +18,42 @@ abstract class GeneratorCommand extends BaseGeneratorCommand
         return file_exists($path)
             ? $path
             : Package::path('stubs' . DIRECTORY_SEPARATOR . $stub);
+    }
+
+    /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        $name = trim($this->argument('name'));
+
+        if (Str::endsWith($name, '.php')) {
+            $name = Str::substr($name, 0, -4);
+        }
+
+        if (!Str::endsWith($name, $this->type)) {
+            $name .= $this->type;
+        }
+
+        return $name;
+    }
+
+    /**
+     * Get the desired model from the input.
+     *
+     * @return string
+     */
+    protected function getModelInput()
+    {
+        $model = trim($this->option('model') ?? '');
+
+        if (empty($model)) {
+            $model = Str::replaceLast($this->type, '', $this->getNameInput());
+        }
+
+        return $model;
     }
 
     /**

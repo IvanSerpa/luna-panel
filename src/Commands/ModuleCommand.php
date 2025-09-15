@@ -1,24 +1,5 @@
 <?php
 
-/*
-namespace Illuminate\Routing\Console;
-
-use Illuminate\Console\Concerns\CreatesMatchingTest;
-use Illuminate\Console\GeneratorCommand;
-use InvalidArgumentException;
-use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-
-use function Laravel\Prompts\confirm;
-use function Laravel\Prompts\select;
-use function Laravel\Prompts\suggest;
-
-#[AsCommand(name: 'make:controller')]
-class ControllerMakeCommand extends GeneratorCommand
-*/
-
 namespace Luna\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
@@ -81,12 +62,11 @@ class ModuleCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = $this->files->get($this->getStub());
-        $model = $this->option('model') ?? str_replace($this->getNamespace($name) . '\\', '', $name);
         $description = $this->option('description') ?? 'A description for the module';
 
         return $this
             ->replaceNamespace($stub, $name)
-            ->replaceModel($stub, $model)
+            ->replaceModel($stub, $this->getModelInput())
             ->replaceDescription($stub, $description)
             ->replaceClass($stub, $name);
     }
