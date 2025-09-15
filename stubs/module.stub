@@ -2,6 +2,7 @@
 
 namespace {{ namespace }};
 
+use App\Models\{{ model }};
 use Luna\Module\Module;
 
 class {{ class }} extends Module
@@ -25,5 +26,15 @@ class {{ class }} extends Module
      *
      * @var class-string
      */
-    public static string $model = \App\Models\{{ model }}::class;
+    public static string $model = {{ model }}::class;
+
+    /**
+     * Get the fields displayed by the module.
+     *
+     * @return array<int, \Luna\Fields\Field>
+     */
+    public function fields(): array
+    {
+        return [];
+    }
 }
