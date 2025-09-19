@@ -4,11 +4,12 @@ namespace Luna\Fields;
 
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
 
-abstract class Field implements Arrayable
+abstract class Field implements Arrayable, Jsonable
 {
     use Conditionable;
     use Macroable;
@@ -152,5 +153,16 @@ abstract class Field implements Arrayable
             'type'       => $this->type,
             'attributes' => $this->attributes,
         ];
+    }
+
+    /**
+     * Convert the object to its JSON representation.
+     *
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson($options = 0): string
+    {
+        return json_encode($this->toArray(), $options);
     }
 }
