@@ -3,11 +3,12 @@
 namespace Luna\Fields;
 
 use Closure;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
 
-abstract class Field
+abstract class Field implements Arrayable
 {
     use Conditionable;
     use Macroable;
@@ -138,5 +139,18 @@ abstract class Field
     public function get(string $key, mixed $default): mixed
     {
         return $this->attributes[$key] ?? $default;
+    }
+
+    /**
+     * Convert the Field instance to an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return [
+            'type'       => $this->type,
+            'attributes' => $this->attributes,
+        ];
     }
 }
