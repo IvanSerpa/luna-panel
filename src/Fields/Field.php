@@ -36,13 +36,19 @@ abstract class Field implements Arrayable, Jsonable
         //
     }
 
+    /**
+     * @param string $method
+     * @param array  $parameters
+     *
+     * @return mixed
+     */
     public function __call(string $method, array $parameters): mixed
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
         }
 
-        $arguments = collect($parameters)->map(static fn ($argument) => $argument instanceof Closure ? $argument() : $argument);
+        $arguments = collect($parameters)->map(static fn($argument) => $argument instanceof Closure ? $argument() : $argument);
 
         if (method_exists($this, $method)) {
             return $this->$method(...$arguments);
@@ -54,13 +60,14 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * Dynamically get attributes on the field.
      *
-     * @param  string  $key  The attribute key to retrieve.
+     * @param string $key The attribute key to retrieve.
+     *
      * @return mixed The value of the attribute, or throws an exception if the attribute does not exist.
      */
     public function __get(string $key)
     {
         return $this->attributes[$key] ?? match ($key) {
-            'type' => $this->type,
+            'type'  => $this->type,
             default => throw new InvalidArgumentException("Unknown field attribute [$key].")
         };
     }
@@ -68,15 +75,15 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * Dynamically set attributes on the field.
      *
-     * @param  string  $key  The attribute key to set.
-     * @param  mixed  $value  The value to set for the attribute.
+     * @param string $key   The attribute key to set.
+     * @param mixed  $value The value to set for the attribute.
+     *
      * @return void
      */
     public function __set(string $key, mixed $value)
     {
         if (in_array($key, ['type'], true)) {
             $this->$key = $value;
-
             return;
         }
 
@@ -86,7 +93,9 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * Create a new Field element.
      *
-     * @param  string  $name  The name of the field.
+     * @param string $name The name of the field.
+     *
+     * @return \Luna\Fields\Field
      */
     public static function make(string $name): Field
     {
@@ -96,7 +105,8 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * Sets the 'value' attribute of the field.
      *
-     * @param  mixed  $value  The value to be set for the 'value' attribute.
+     * @param mixed $value The value to be set for the 'value' attribute.
+     *
      * @return static Returns the current instance for method chaining.
      */
     public function value(mixed $value): Field
@@ -107,11 +117,12 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * Sets the value for the specified attribute of the field.
      *
-     * @param  string  $key  The name of the attribute to set.
-     * @param  mixed  $value  The value of the attribute.
+     * @param string $key   The name of the attribute to set.
+     * @param mixed  $value The value of the attribute.
+     *
      * @return static Returns the current instance for method chaining.
      */
-    public function set(string $key, mixed $value = true): Field
+    public function set(string $key,  mixed $value = true): Field
     {
         $this->attributes[$key] = $value;
 
@@ -121,8 +132,10 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * Gets the value for the specified attribute of the field.
      *
-     * @param  string  $key  The name of the attribute to get.
-     * @param  mixed  $default  The default value to return if the attribute is not set.
+     * @param string $key     The name of the attribute to get.
+     * @param mixed  $default The default value to return if the attribute is not set.
+     *
+     * @return mixed
      */
     public function get(string $key, mixed $default): mixed
     {
@@ -137,7 +150,7 @@ abstract class Field implements Arrayable, Jsonable
     public function toArray(): array
     {
         return [
-            'type' => $this->type,
+            'type'       => $this->type,
             'attributes' => $this->attributes,
         ];
     }
@@ -146,6 +159,7 @@ abstract class Field implements Arrayable, Jsonable
      * Convert the object to its JSON representation.
      *
      * @param  int  $options
+     * @return string
      */
     public function toJson($options = 0): string
     {
