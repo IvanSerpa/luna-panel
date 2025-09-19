@@ -24,9 +24,7 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * An array containing all attributes available to the field.
      */
-    protected array $attributes = [
-        'value' => null,
-    ];
+    protected array $attributes = [];
 
     /**
      * Create a new Field instance.
@@ -71,6 +69,7 @@ abstract class Field implements Arrayable, Jsonable
         }
 
         $value = $arguments[0] ?? true;
+
         return $this->set($method, $value);
     }
 
