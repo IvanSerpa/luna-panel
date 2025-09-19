@@ -12,7 +12,9 @@ use InvalidArgumentException;
 abstract class Field implements Arrayable, Jsonable
 {
     use Conditionable;
-    use Macroable;
+    use Macroable {
+        __call as macroCall;
+    }
 
     /**
      * Field type.
@@ -37,10 +39,21 @@ abstract class Field implements Arrayable, Jsonable
     }
 
     /**
-     * @param string $method
-     * @param array  $parameters
+     * Dynamically handle calls to the field instance.
      *
-     * @return mixed
+     * Resolution order:
+     * 1. Registered macro (delegated to Macroable's implementation)
+     * 2. Actual method on the instance
+     * 3. Fallback: treat the method name as an attribute key and set its value
+     *
+     * Each provided Closure argument is executed immediately and its return
+     * value is used instead (lazy evaluation support). Non-Closure arguments
+     * are passed through unchanged.
+     *
+     * @param string            $method
+     * @param array<int, mixed> $parameters
+     *
+     * @return mixed|static Returns whatever the macro/method returns, or the Field instance when used as a fluent attribute setter.
      */
     public function __call(string $method, array $parameters): mixed
     {
@@ -48,13 +61,17 @@ abstract class Field implements Arrayable, Jsonable
             return $this->macroCall($method, $parameters);
         }
 
-        $arguments = collect($parameters)->map(static fn($argument) => $argument instanceof Closure ? $argument() : $argument);
+        $arguments = [];
+        foreach ($parameters as $argument) {
+            $arguments[] = $argument instanceof Closure ? $argument() : $argument;
+        }
 
         if (method_exists($this, $method)) {
             return $this->$method(...$arguments);
         }
 
-        return $this->set($method, ...$arguments);
+        $value = $arguments[0] ?? true;
+        return $this->set($method, $value);
     }
 
     /**
