@@ -5,6 +5,7 @@ namespace Luna\Fields;
 use Closure;
 use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
+use InvalidArgumentException;
 
 abstract class Field
 {
@@ -22,6 +23,16 @@ abstract class Field
     protected array $attributes = [
         'value' => null,
     ];
+
+    /**
+     * Create a new Field instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
 
     /**
      * @param string $method
@@ -42,6 +53,39 @@ abstract class Field
         }
 
         return $this->set($method, ...$arguments);
+    }
+
+    /**
+     * Dynamically get attributes on the field.
+     *
+     * @param string $key The attribute key to retrieve.
+     *
+     * @return mixed The value of the attribute, or throws an exception if the attribute does not exist.
+     */
+    public function __get(string $key)
+    {
+        return $this->attributes[$key] ?? match ($key) {
+            'type'  => $this->type,
+            default => throw new InvalidArgumentException("Unknown field attribute [$key].")
+        };
+    }
+
+    /**
+     * Dynamically set attributes on the field.
+     *
+     * @param string $key   The attribute key to set.
+     * @param mixed  $value The value to set for the attribute.
+     *
+     * @return void
+     */
+    public function __set(string $key, mixed $value)
+    {
+        if (in_array($key, ['type'], true)) {
+            $this->$key = $value;
+            return;
+        }
+
+        $this->attributes[$key] = $value;
     }
 
     /**
