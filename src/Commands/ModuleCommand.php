@@ -48,7 +48,7 @@ class ModuleCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Luna\Modules';
+        return $rootNamespace.'\Luna\Modules';
     }
 
     /**

@@ -13,11 +13,11 @@ abstract class GeneratorCommand extends BaseGeneratorCommand
      */
     protected function resolveStubPath(string $stub): string
     {
-        $path = $this->laravel->basePath('stubs' . DIRECTORY_SEPARATOR . 'luna' . DIRECTORY_SEPARATOR . trim($stub, DIRECTORY_SEPARATOR));
+        $path = $this->laravel->basePath('stubs'.DIRECTORY_SEPARATOR.'luna'.DIRECTORY_SEPARATOR.trim($stub, DIRECTORY_SEPARATOR));
 
         return file_exists($path)
             ? $path
-            : Package::path('stubs' . DIRECTORY_SEPARATOR . $stub);
+            : Package::path('stubs'.DIRECTORY_SEPARATOR.$stub);
     }
 
     /**
@@ -33,7 +33,7 @@ abstract class GeneratorCommand extends BaseGeneratorCommand
             $name = Str::substr($name, 0, -4);
         }
 
-        if (!Str::endsWith($name, $this->type)) {
+        if (! Str::endsWith($name, $this->type)) {
             $name .= $this->type;
         }
 
