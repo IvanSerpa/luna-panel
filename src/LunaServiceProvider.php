@@ -6,8 +6,10 @@ use Luna\Commands\LunaCommand;
 use Luna\Commands\ModuleCommand;
 use Luna\Module\Controller;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 
 class LunaServiceProvider extends PackageServiceProvider
 {
@@ -22,11 +24,19 @@ class LunaServiceProvider extends PackageServiceProvider
             ->name('luna')
             ->hasConfigFile()
             ->hasViews()
+            ->hasInertiaComponents()
             ->hasMigration('create_luna_panel_table')
             ->hasCommands([
                 LunaCommand::class,
                 ModuleCommand::class,
-            ]);
+            ])->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    // ->publishConfigFile()
+                    ->publishAssets()
+                    // ->publishMigrations()
+                    // ->askToRunMigrations()
+                    // ->copyAndRegisterServiceProviderInApp();
+            });
     }
 
     public function packageRegistered(): void
@@ -60,5 +70,26 @@ class LunaServiceProvider extends PackageServiceProvider
                     Route::delete('/{record}', [Controller::class, 'destroy'])->defaults('module', $moduleClass)->name('destroy');
                 });
         });
+    }
+
+    protected function bootPackageInertia(): self
+    {
+        if (!$this->package->hasInertiaComponents) {
+            return $this;
+        }
+
+        $namespace = $this->package->viewNamespace;
+        $directoryName = Str::of($this->packageView($namespace))->lower()->remove('-')->value();
+        $vendorComponents = $this->package->basePath('/../resources/js');
+        $appComponents = base_path("resources/js/{$directoryName}");
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes(
+                [$vendorComponents => $appComponents],
+                "{$this->packageView($namespace)}-inertia-components"
+            );
+        }
+
+        return $this;
     }
 }
