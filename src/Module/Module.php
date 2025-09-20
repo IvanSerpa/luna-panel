@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use RuntimeException;
 
-class Module
+abstract class Module
 {
     /**
      * The name of the module.
@@ -35,6 +35,13 @@ class Module
      * @var bool
      */
     public static bool $displayInNavigation = false;
+
+    /**
+     * Get the columns displayed by the module.
+     *
+     * @return array<int, \Luna\Fields\Field>
+     */
+    abstract public function columns(): array;
 
     /**
      * Get the slug for the module, derived from the name.

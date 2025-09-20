@@ -7,5 +7,5 @@ class Badge extends Field
     /**
      * Field type.
      */
-    protected string $type = 'badge';
+    public string $type = 'badge';
 }

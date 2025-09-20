@@ -7,7 +7,7 @@ class ID extends Field
     /**
      * Field type.
      */
-    protected string $type = 'id';
+    public string $type = 'id';
 
     /**
      * Create a new ID element.

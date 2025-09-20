@@ -19,7 +19,12 @@ class Controller
 
     public function index(Request $request): Response
     {
-        return response()->json([$this->module, 'index']);
+        return response()->json([
+            'method'  => 'index',
+            'module'  => $this->module,
+            'model'   => $this->module::$model,
+            'columns' => $this->module->columns(),
+        ]);
     }
 
     public function create(Request $request): Response

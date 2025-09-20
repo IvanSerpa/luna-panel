@@ -19,12 +19,12 @@ abstract class Field implements Arrayable, Jsonable
     /**
      * Field type.
      */
-    protected string $type;
+    public string $type;
 
     /**
      * An array containing all attributes available to the field.
      */
-    protected array $attributes = [];
+    public array $attributes = [];
 
     /**
      * Create a new Field instance.

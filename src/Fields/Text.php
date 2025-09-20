@@ -7,5 +7,5 @@ class Text extends Field
     /**
      * Field type.
      */
-    protected string $type = 'text';
+    public string $type = 'text';
 }
