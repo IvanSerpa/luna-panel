@@ -4,6 +4,7 @@ namespace Luna;
 
 use Luna\Commands\LunaCommand;
 use Luna\Commands\ModuleCommand;
+use Luna\Module\Controller;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -48,13 +49,15 @@ class LunaServiceProvider extends PackageServiceProvider
 
             Route::middleware(['web'])
                 ->prefix($slug)
-                ->name('luna.modules.' . $slug . '.')
+                ->as('luna.modules.' . $slug . '.')
                 ->group(function () use ($moduleClass) {
-                    Route::get('/', function () use ($moduleClass) {
-                        return response()->json([
-                            'module' => $moduleClass,
-                        ]);
-                    })->name('index');
+                    Route::get('/', [Controller::class, 'index'])->defaults('module', $moduleClass)->name('index');
+                    Route::get('/create', [Controller::class, 'create'])->defaults('module', $moduleClass)->name('create');
+                    Route::post('/', [Controller::class, 'store'])->defaults('module', $moduleClass)->name('store');
+                    Route::get('/{record}', [Controller::class, 'show'])->defaults('module', $moduleClass)->name('show');
+                    Route::get('/{record}/edit', [Controller::class, 'edit'])->defaults('module', $moduleClass)->name('edit');
+                    Route::match(['put', 'patch'], '/{record}', [Controller::class, 'update'])->defaults('module', $moduleClass)->name('update');
+                    Route::delete('/{record}', [Controller::class, 'destroy'])->defaults('module', $moduleClass)->name('destroy');
                 });
         });
     }
