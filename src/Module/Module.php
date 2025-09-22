@@ -23,11 +23,18 @@ abstract class Module
     public static string $description;
 
     /**
-     * The model the resource corresponds to.
+     * The model the module corresponds to.
      *
-     * @var class-string<Model>
+     * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
     public static string $model;
+
+    /**
+     * The pagination resource the module corresponds to.
+     *
+     * @var class-string<\Illuminate\Http\Resources\Json\ResourceCollection>
+     */
+    public static string $paginationResource;
 
     /**
      * Indicates if the resource should be displayed in the sidebar.

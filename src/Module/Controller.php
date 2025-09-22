@@ -17,24 +17,23 @@ class Controller
         $this->module = new ($request->route('module'));
     }
 
-    /**
-     * Render a response using the Inertia response factory.
-     *
-     * @param  string $component
-     * @param  array  $props
-     * @return \Inertia\Response
-     */
-    protected function render(string $component, array $props = [])
-    {
-        return InertiaRender::render($component, $props);
-    }
-
     public function index(Request $request)
     {
-        return $this->render('Luna/Modules/Index', [
-            'module'  => $this->module,
-            'model'   => $this->module::$model,
-            'columns' => $this->module->columns(),
+        $pagination = $this->module::$model::paginate();
+
+        if (isset($this->module::$paginationResource)) {
+            $pagination = new ($this->module::$paginationResource)($pagination);
+        }
+
+        return InertiaRender::render('Luna/modules/Index', [
+            'luna' => [
+                'module'  => [
+                    'name'        => $this->module::$name,
+                    'description' => $this->module::$description,
+                    'columns'     => $this->module->columns(),
+                    'pagination'  => $pagination,
+                ],
+            ]
         ]);
     }
 
