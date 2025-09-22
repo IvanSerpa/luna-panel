@@ -24,9 +24,20 @@ class Controller
         $query          = $this->module::$model::query();
         $sortBy         = $request->query('sort_by');
         $sortDir        = $request->query('sort_dir');
+        $search         = $request->query('search');
 
         if ($sortBy && $sortDir) {
             $query->orderBy($sortBy, $sortDir);
+        }
+
+        if ($search) {
+            $searchables = collect($this->module->searchables())->pluck('attributes.searchable')->flatten()->toArray();
+
+            $query->where(function ($q) use ($searchables, $search) {
+                foreach ($searchables as $field) {
+                    $q->orWhere($field, 'LIKE', "%{$search}%");
+                }
+            });
         }
 
         $pagination = $query->paginate($perPage);
@@ -41,6 +52,7 @@ class Controller
                     'name'        => $this->module::$name,
                     'description' => $this->module::$description,
                     'columns'     => $this->module->columns(),
+                    'searchables' => $this->module->searchables(),
                     'pagination'  => $pagination,
                 ],
             ]

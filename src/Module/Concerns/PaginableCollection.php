@@ -38,10 +38,15 @@ trait PaginableCollection
 
         $sortBy  = $request->query('sort_by');
         $sortDir = $request->query('sort_dir');
+        $search  = $request->query('search');
 
         if ($sortBy && $sortDir) {
             $default['meta']['sort_by'] = $sortBy;
             $default['meta']['sort_dir'] = $sortDir;
+        }
+
+        if ($search) {
+            $default['meta']['search'] = $search;
         }
 
         return $default;

@@ -51,6 +51,13 @@ abstract class Module
     abstract public function columns(): array;
 
     /**
+     * Get the searchable fields used on searching the module.
+     *
+     * @return array<int, \Luna\Fields\Field>
+     */
+    abstract public function searchables(): array;
+
+    /**
      * Get the slug for the module, derived from the name.
      *
      * @return string
