@@ -21,7 +21,15 @@ class Controller
     {
         $perPageOptions = $this->module::$perPageOptions ?? [20];
         $perPage        = $request->query('per_page', $perPageOptions[0]);
-        $pagination     = $this->module::$model::paginate($perPage);
+        $query          = $this->module::$model::query();
+        $sortBy         = $request->query('sort_by');
+        $sortDir        = $request->query('sort_dir');
+
+        if ($sortBy && $sortDir) {
+            $query->orderBy($sortBy, $sortDir);
+        }
+
+        $pagination = $query->paginate($perPage);
 
         if (isset($this->module::$paginationResource)) {
             $pagination = new ($this->module::$paginationResource)($pagination);

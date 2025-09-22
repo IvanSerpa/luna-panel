@@ -36,6 +36,14 @@ trait PaginableCollection
         $module = static::getModule();
         $default['meta']['per_page_options'] = $module::$perPageOptions ?? [20];
 
+        $sortBy  = $request->query('sort_by');
+        $sortDir = $request->query('sort_dir');
+
+        if ($sortBy && $sortDir) {
+            $default['meta']['sort_by'] = $sortBy;
+            $default['meta']['sort_dir'] = $sortDir;
+        }
+
         return $default;
     }
 }
