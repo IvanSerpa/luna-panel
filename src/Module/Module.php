@@ -44,6 +44,13 @@ abstract class Module
     public static bool $displayInNavigation = false;
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<int, string>
+     */
+    public static array $with;
+
+    /**
      * Get the columns displayed by the module.
      *
      * @return array<int, \Luna\Fields\Field>

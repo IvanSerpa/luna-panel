@@ -40,6 +40,10 @@ class Controller
             });
         }
 
+        if (isset($this->module::$with)) {
+            $query->with($this->module::$with);
+        }
+
         $pagination = $query->paginate($perPage);
 
         if (isset($this->module::$paginationResource)) {
