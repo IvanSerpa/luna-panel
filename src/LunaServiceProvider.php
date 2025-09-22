@@ -32,10 +32,10 @@ class LunaServiceProvider extends PackageServiceProvider
             ])->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     // ->publishConfigFile()
-                    ->publishAssets()
-                    // ->publishMigrations()
-                    // ->askToRunMigrations()
-                    // ->copyAndRegisterServiceProviderInApp();
+                    ->publishAssets();
+                // ->publishMigrations()
+                // ->askToRunMigrations()
+                // ->copyAndRegisterServiceProviderInApp();
             });
     }
 
@@ -81,7 +81,7 @@ class LunaServiceProvider extends PackageServiceProvider
         $namespace = $this->package->viewNamespace;
         $directoryName = Str::of($this->packageView($namespace))->lower()->remove('-')->value();
         $vendorComponents = $this->package->basePath('/../resources/js');
-        $appComponents = base_path("resources/js/{$directoryName}");
+        $appComponents = base_path("resources/js");
 
         if ($this->app->runningInConsole()) {
             $this->publishes(
