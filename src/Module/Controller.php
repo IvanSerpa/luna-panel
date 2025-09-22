@@ -19,7 +19,9 @@ class Controller
 
     public function index(Request $request)
     {
-        $pagination = $this->module::$model::paginate();
+        $perPageOptions = $this->module::$perPageOptions ?? [20];
+        $perPage        = $request->query('per_page', $perPageOptions[0]);
+        $pagination     = $this->module::$model::paginate($perPage);
 
         if (isset($this->module::$paginationResource)) {
             $pagination = new ($this->module::$paginationResource)($pagination);
