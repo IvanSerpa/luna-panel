@@ -41,8 +41,6 @@ trait PaginableCollection
         $search  = $request->query('search');
         $locCode = $request->query('location_code');
 
-        dd($locCode);
-
         if ($sortBy && $sortDir) {
             $default['meta']['sort_by'] = $sortBy;
             $default['meta']['sort_dir'] = $sortDir;
