@@ -25,6 +25,7 @@ class Controller
         $sortBy         = $request->query('sort_by');
         $sortDir        = $request->query('sort_dir');
         $search         = $request->query('search');
+        $locCode        = $request->query('location_code');
 
         if ($sortBy && $sortDir) {
             $query->orderBy($sortBy, $sortDir);
@@ -38,6 +39,10 @@ class Controller
                     $q->orWhere($field, 'LIKE', "%{$search}%");
                 }
             });
+        }
+
+        if ($locCode) {
+            $query->where('location_code', $locCode);
         }
 
         if (isset($this->module::$with)) {
