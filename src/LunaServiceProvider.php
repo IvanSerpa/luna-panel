@@ -57,7 +57,7 @@ class LunaServiceProvider extends PackageServiceProvider
         $luna->modules()->each(function (string $moduleClass) {
             $slug = $moduleClass::slug();
 
-            Route::middleware(['web'])
+            Route::middleware(['auth'])
                 ->prefix($slug)
                 ->as('luna.modules.' . $slug . '.')
                 ->group(function () use ($moduleClass) {
